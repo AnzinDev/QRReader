@@ -36,8 +36,7 @@ namespace QR
         private void NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             var frame = eventArgs.Frame.Clone() as Bitmap;
-            var otsuFrame = frame.OtsuThreshold();
-            var result = BarcodeReader.Decode(frame);
+            var result = BarcodeReader.Decode(frame.OtsuThreshold());
 
             if (result != null)
             {
