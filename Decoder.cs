@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using AForge.Video.DirectShow;
 using AForge.Video;
 using ZXing;
-using ZXing.Common;
 
 namespace QR
 {
@@ -40,7 +36,7 @@ namespace QR
         private void NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             var frame = eventArgs.Frame.Clone() as Bitmap;
-
+            var otsuFrame = frame.OtsuThreshold();
             var result = BarcodeReader.Decode(frame);
 
             if (result != null)
@@ -53,8 +49,6 @@ namespace QR
         {
             try
             {
-                Console.WriteLine("Press Space to start");
-                Console.Read();
                 VideoCaptureDevice.Start();
             }
             catch (Exception ex)
