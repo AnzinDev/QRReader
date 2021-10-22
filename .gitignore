@@ -7,3 +7,5 @@ packages.config
 packages/
 .vs/
 App.config
+Config.cs
+ConfigManager.cs
