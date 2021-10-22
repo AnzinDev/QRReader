@@ -13,34 +13,53 @@ namespace QR
         FilterInfoCollection FilterInfoCollection { get; set; }
         BarcodeReader BarcodeReader { get; set; }
 
-        public Decoder(int cameraNum)
+        public Decoder()
         {
-            try
+           
+        }
+
+        public void InitializeReader(BarcodeFormat format)
+        {
+            BarcodeReader = new BarcodeReader();
+            BarcodeReader.Options.PossibleFormats = new List<BarcodeFormat>();
+            BarcodeReader.Options.PossibleFormats.Add(format);
+        }
+
+        public string[] DecodeImages(Bitmap bitmap)
+        {
+            var results = BarcodeReader.DecodeMultiple(bitmap);
+            if (results != null)
             {
-                //initialize and setup QR-code reader
-                BarcodeReader = new BarcodeReader();
-                BarcodeReader.Options.PossibleFormats = new List<BarcodeFormat>();
-                BarcodeReader.Options.PossibleFormats.Add(BarcodeFormat.QR_CODE);
-                //initialize camera capture
-                FilterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-                VideoCaptureDevice = new VideoCaptureDevice();
-                VideoCaptureDevice.Source = FilterInfoCollection[cameraNum].MonikerString;
-                VideoCaptureDevice.NewFrame += NewFrame;
+                var length = results.Length;
+                string[] resultText = new string[length];
+                for (int i = 0; i < length; i++)
+                {
+                    resultText[i] = results[i].Text;
+                }
+
+                return resultText;
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                return default;
             }
+        }
+
+        public void InitializeCamera(int cameraNum)
+        {
+            //initialize camera capture
+            FilterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            VideoCaptureDevice = new VideoCaptureDevice();
+            VideoCaptureDevice.Source = FilterInfoCollection[cameraNum].MonikerString;
+            VideoCaptureDevice.NewFrame += NewFrame;
         }
 
         private void NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             var frame = eventArgs.Frame.Clone() as Bitmap;
-            var result = BarcodeReader.Decode(frame.OtsuThreshold());
-
-            if (result != null)
+            foreach (var item in DecodeImages(frame))
             {
-                Console.WriteLine(result.Text);
+                Console.WriteLine(item);
             }
         }
 

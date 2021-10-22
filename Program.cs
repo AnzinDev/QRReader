@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Decoder decoder = new Decoder(0);
+            Decoder decoder = new Decoder();
             decoder.StartCapture();
         }
     }
