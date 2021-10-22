@@ -13,11 +13,6 @@ namespace QR
         FilterInfoCollection FilterInfoCollection { get; set; }
         BarcodeReader BarcodeReader { get; set; }
 
-        public Decoder()
-        {
-           
-        }
-
         public void InitializeReader(BarcodeFormat format)
         {
             BarcodeReader = new BarcodeReader();
