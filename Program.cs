@@ -7,8 +7,9 @@ namespace QR
     {
         static void Main(string[] args)
         {
-            Properties.Settings.Default.openSum++;
             Decoder decoder = new Decoder();
+            decoder.InitializeCamera(0);
+            decoder.InitializeReader(ZXing.BarcodeFormat.QR_CODE);
             decoder.StartCapture();
         }
     }
