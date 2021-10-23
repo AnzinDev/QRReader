@@ -52,9 +52,9 @@ namespace QR
         private void NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             var frame = eventArgs.Frame.Clone() as Bitmap;
-            foreach (var item in DecodeImages(frame))
+            foreach (var element in DecodeImages(frame))
             {
-                Console.WriteLine(item);
+                Console.WriteLine(element);
             }
         }
 
