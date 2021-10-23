@@ -1,0 +1,13 @@
+﻿Properties/
+QR.csproj
+QR.sln
+bin/
+obj/
+packages.config
+packages/
+.vs/
+App.config
+Config.cs
+ConfigManager.cs
+QRReader.csproj
+QRReader.sln
