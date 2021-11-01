@@ -4,6 +4,7 @@ using System.Drawing;
 using AForge.Video.DirectShow;
 using AForge.Video;
 using ZXing;
+using System.Drawing.Imaging;
 
 namespace QR
 {
@@ -52,9 +53,26 @@ namespace QR
         private void NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             var frame = eventArgs.Frame.Clone() as Bitmap;
-            foreach (var item in DecodeImages(frame))
+            
+            var results = DecodeImages(frame);
+            foreach (var item in results)
             {
                 Console.WriteLine(item);
+            }
+        }
+
+        private unsafe byte[] BitmapToRawBytes(Bitmap bmp)
+        {
+            int height = bmp.Height, width = bmp.Width;
+            BitmapData bd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+            byte[] gray = new byte[height * width];
+            try
+            {
+                
+            }
+            finally
+            {
+                    
             }
         }
 

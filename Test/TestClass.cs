@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace QR.Test
 {
@@ -15,7 +16,7 @@ namespace QR.Test
         {
             Decoder decoder = new Decoder();
 
-            var images = UploadImages(@"D:\VS Solutions\QR\bin\Debug\fortest");
+            var images = UploadImages("fortest");
 
             string[] expected = new string[images.Length];
             string[] actual = new string[images.Length];
@@ -39,7 +40,7 @@ namespace QR.Test
             List<Bitmap> images = new List<Bitmap>();
             try
             {
-                DirectoryInfo directory = new DirectoryInfo(absoluteFolderPath);
+                DirectoryInfo directory = new DirectoryInfo(Path.Combine(Assembly.GetExecutingAssembly().Location, absoluteFolderPath));
                 if (directory.Exists)
                 {
                     var files = directory.GetFiles();
