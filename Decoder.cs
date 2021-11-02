@@ -5,6 +5,7 @@ using AForge.Video.DirectShow;
 using AForge.Video;
 using ZXing;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace QR
 {
@@ -21,19 +22,17 @@ namespace QR
             BarcodeReader.Options.PossibleFormats.Add(format);
         }
 
-        public string[] DecodeImages(Bitmap bitmap)
+        public string DecodeFromImage(Bitmap bitmap)
         {
-            var results = BarcodeReader.DecodeMultiple(bitmap);
-            if (results != null)
+            int height = bitmap.Height;
+            int width = bitmap.Width;
+            byte[] gray = bitmap.BitmapToOtsuBinarizedBytes();
+            
+            var result = BarcodeReader.Decode(gray, width, height, RGBLuminanceSource.BitmapFormat.RGB24);
+            
+            if (result != null)
             {
-                var length = results.Length;
-                string[] resultText = new string[length];
-                for (int i = 0; i < length; i++)
-                {
-                    resultText[i] = results[i].Text;
-                }
-
-                return resultText;
+                return result.Text;
             }
             else
             {
@@ -43,7 +42,6 @@ namespace QR
 
         public void InitializeCamera(int cameraNum)
         {
-            //initialize camera capture
             FilterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             VideoCaptureDevice = new VideoCaptureDevice();
             VideoCaptureDevice.Source = FilterInfoCollection[cameraNum].MonikerString;
@@ -52,27 +50,15 @@ namespace QR
 
         private void NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            var frame = eventArgs.Frame.Clone() as Bitmap;
-            
-            var results = DecodeImages(frame);
-            foreach (var item in results)
+            Bitmap frame = eventArgs.Frame.Clone() as Bitmap;
+            string result = DecodeFromImage(frame);
+            if (result != null)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(result);
             }
-        }
-
-        private unsafe byte[] BitmapToRawBytes(Bitmap bmp)
-        {
-            int height = bmp.Height, width = bmp.Width;
-            BitmapData bd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
-            byte[] gray = new byte[height * width];
-            try
+            else
             {
-                
-            }
-            finally
-            {
-                    
+                Console.WriteLine("result is null");
             }
         }
 

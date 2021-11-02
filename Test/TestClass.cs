@@ -28,7 +28,7 @@ namespace QR.Test
 
             for (int i = 0; i < images.Length; i++)
             {
-                actual[i] = decoder.DecodeImages(images[i])[0];
+                actual[i] = decoder.DecodeFromImage(images[i]);
                 Console.WriteLine(actual[i]);
             }
 
