@@ -6,6 +6,9 @@ using AForge.Video;
 using ZXing;
 using System.Drawing.Imaging;
 using System.IO;
+using Emgu.CV;
+using Emgu.CV.Structure;
+using System.Threading;
 
 namespace QR
 {
@@ -24,11 +27,11 @@ namespace QR
 
         public string DecodeFromImage(Bitmap bitmap)
         {
+            bitmap.Save(@"D:/test/1.jpg");
             int height = bitmap.Height;
             int width = bitmap.Width;
-            byte[] gray = bitmap.BitmapToOtsuBinarizedBytes();
-            
-            var result = BarcodeReader.Decode(gray, width, height, RGBLuminanceSource.BitmapFormat.RGB24);
+
+            var result = BarcodeReader.Decode(bitmap.BitmapToOtsuBytes(), width, height, RGBLuminanceSource.BitmapFormat.Unknown);
             
             if (result != null)
             {
@@ -45,6 +48,7 @@ namespace QR
             FilterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             VideoCaptureDevice = new VideoCaptureDevice();
             VideoCaptureDevice.Source = FilterInfoCollection[cameraNum].MonikerString;
+            VideoCaptureDevice.VideoResolution = VideoCaptureDevice.VideoCapabilities[5];
             VideoCaptureDevice.NewFrame += NewFrame;
         }
 
@@ -52,14 +56,7 @@ namespace QR
         {
             Bitmap frame = eventArgs.Frame.Clone() as Bitmap;
             string result = DecodeFromImage(frame);
-            if (result != null)
-            {
-                Console.WriteLine(result);
-            }
-            else
-            {
-                Console.WriteLine("result is null");
-            }
+            Console.WriteLine(result);
         }
 
         public void StartCapture()
