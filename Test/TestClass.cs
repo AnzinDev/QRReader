@@ -9,7 +9,7 @@ using System.Reflection;
 namespace QR.Test
 {
     [TestFixture]
-    class TestClass
+    public class TestClass
     {
         [Test]
         public void Test1()
@@ -35,12 +35,12 @@ namespace QR.Test
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        public Bitmap[] UploadImages(string absoluteFolderPath)
+        public Bitmap[] UploadImages(string folderPath)
         {
             List<Bitmap> images = new List<Bitmap>();
             try
             {
-                DirectoryInfo directory = new DirectoryInfo(Path.Combine(Assembly.GetExecutingAssembly().Location, absoluteFolderPath));
+                DirectoryInfo directory = new DirectoryInfo(Path.Combine(Assembly.GetExecutingAssembly().Location, folderPath));
                 if (directory.Exists)
                 {
                     var files = directory.GetFiles();

@@ -22,7 +22,6 @@ namespace QR
 
         public string DecodeFromImage(Bitmap bitmap)
         {
-            bitmap.Save(@"D:/test/1.jpg");
             int height = bitmap.Height;
             int width = bitmap.Width;
 
