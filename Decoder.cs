@@ -4,11 +4,6 @@ using System.Drawing;
 using AForge.Video.DirectShow;
 using AForge.Video;
 using ZXing;
-using System.Drawing.Imaging;
-using System.IO;
-using Emgu.CV;
-using Emgu.CV.Structure;
-using System.Threading;
 
 namespace QR
 {
