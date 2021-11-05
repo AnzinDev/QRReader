@@ -16,4 +16,7 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.2
     - name: Restore Packages
-      uses: nuget restore 
+      run: nuget restore QR.sln
+    - name: Build app
+      run: |
+        msbuil.exe QR.sln /p:platform="Any CPU" /p:configuration="Release"
