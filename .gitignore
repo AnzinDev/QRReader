@@ -1,6 +1,4 @@
 ﻿Properties/
-QR.csproj
-QR.sln
 bin/
 obj/
 packages.config
