@@ -1,7 +1,6 @@
 ﻿Properties/
 bin/
 obj/
-packages.config
 packages/
 .vs/
 App.config
