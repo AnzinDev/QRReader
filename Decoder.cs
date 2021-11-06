@@ -12,6 +12,7 @@ namespace QR
         VideoCaptureDevice VideoCaptureDevice { get; set; }
         FilterInfoCollection FilterInfoCollection { get; set; }
         BarcodeReader BarcodeReader { get; set; }
+        string text { get; set; }
 
         public void InitializeReader(BarcodeFormat format)
         {
@@ -49,8 +50,13 @@ namespace QR
         private void NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             Bitmap frame = eventArgs.Frame.Clone() as Bitmap;
-            string result = DecodeFromImage(frame);
-            Console.WriteLine(result);
+            text = DecodeFromImage(frame);
+            GetResult();
+        }
+
+        public void GetResult()
+        {
+            Console.WriteLine(text);
         }
 
         public void StartCapture()

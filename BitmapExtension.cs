@@ -9,10 +9,12 @@ namespace QR
         {
             const int depth = 256;
             int height = bmp.Height,
-                width = bmp.Width;
+                width  = bmp.Width;
             BitmapData bd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+
             int size = height * width;
             byte[] grayImage = new byte[size];
+
             try
             {
                 byte* curr;
