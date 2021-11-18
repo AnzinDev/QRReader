@@ -1,7 +1,4 @@
-﻿Properties/
-bin/
+﻿bin/
 obj/
 packages/
 .vs/
-Config.cs
-ConfigManager.cs
