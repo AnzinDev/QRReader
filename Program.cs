@@ -2,7 +2,7 @@
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Decoder decoder = new Decoder();
             decoder.InitializeCamera(0);

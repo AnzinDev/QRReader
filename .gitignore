@@ -3,6 +3,5 @@ bin/
 obj/
 packages/
 .vs/
-App.config
 Config.cs
 ConfigManager.cs
