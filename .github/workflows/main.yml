@@ -38,6 +38,6 @@ jobs:
         run: |
           msbuild .\QR.sln /t:clean /p:Configuration=Debug /p:AllowUnsafeBlocks=true
           nuget restore .\QR.sln 
-          msbuild .\QR.sln /t:build /p:Configuration=Debug
+          msbuild .\QR.sln /t:build /p:Configuration=Debug /p:AllowUnsafeBlocks=true
           
          
